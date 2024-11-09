@@ -31,15 +31,28 @@ Avant de démarrer, assurez-vous d’avoir
 3. Un fichier OVA valide à déployer et un fichier ISO pour la configuration des lecteurs CD-ROM.
 4. Un fichier de configuration JSON (conf.json) avec les paramètres suivants :
    ``` {
-    "vsphere_host": "votre_adresse_vsphere",
-    "vsphere_user": "votre_utilisateur",
-    "vsphere_password": "votre_mot_de_passe",
-    "ova_path": "/chemin/vers/fichier.ova",
-    "iso_path": "DB1/test/Core-5.4.iso",
-    "number_of_instances": 2,
-    "template_vm_name": "Nom_du_modèle_VM",
-    "ram": 2048,
-    "disk_size": 10
+    "center_host": "votre_vSphere_center_host",
+    "admin_user": "votre_vSphere_nom_utilisateur",
+    "password": "votre_vSpher_password",
+    "template_vm_name": "votre_template_vm_name",
+    "vm_name": "vm_name",
+    "datacenter_name": "datacenter_name",
+    "vm_folder": "vm_folder", 
+    "new_vm_name": "new_vm_name",
+    "data_store": "data_store", 
+    "cluster_name": "cluster_name",
+    "resource_pool": "resource_pool",
+    "power_on": true,
+    "ova_files": "ova_files",
+    "iso_path": "iso_path",
+    "core_vm_name": "core_vm_name",
+    "new_core_vm_name": "new_core_vm_name",
+    "number_of_instances": number_of_instances,
+    "number_of_clones": number_of_clones,
+    "memory_mb": memory_mb,
+    "disk_size": disk_size,
+    "number_of_cpu": number_of_cpu,
+    "disable_ssl_verification": true
 }```
 
 ## Structure du Projet
