@@ -17,7 +17,7 @@ Il s'agit d'un ensemble de scripts visant à automatiser et simplifier le proces
 * Structure du Projet
 * Utilisation
 * Difficultés Rencontrées et Solutions
-* Crédits
+* Scripts complémentaires
 
 
 ## Prérequis
