@@ -1,0 +1,32 @@
+{
+    "center_host": "10.144.208.236",
+    "admin_user": "root",
+    "password": "toto32..",
+
+    
+    "template_vm_name": "tinyVM",
+    "vm_name": "tinyVM",
+
+    
+    "datacenter_name": "ha-datacenter",
+    "vm_folder": "vm", 
+    "new_vm_name": "new_tinyVM",
+    "data_store": "datastore1", 
+    "cluster_name": "localhost",
+
+    "resource_pool": "Resources",
+    "power_on": true,
+
+    "ova_files": "tinyVM.ova",
+    
+    "iso_path": "[datastore1] test/Core-5.4.iso",
+    "new_core_vm_name": "core_vm_name",
+    "core_vm_name": "core_vm_name_1",
+    
+    "number_of_instances": 1,
+    "number_of_clones": 1,
+    "memory_mb": 2048,
+    "disk_size": 20,
+    "number_of_cpu": 2,
+    "disable_ssl_verification": true
+}
