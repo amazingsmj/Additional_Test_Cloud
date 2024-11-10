@@ -16,7 +16,7 @@ def create_empty_vm(new_core_vm_name, si, vm_folder, resource_pool, datastore, m
     datastore_path = f'[{datastore}] {new_core_vm_name}'
     
     # Configure the basic VMX file, without disk
-    vmx_file = vim.vm.FileInfo(
+    vmx_file = vim.vm.FileInfo( 
         logDirectory=None,
         snapshotDirectory=None,
         suspendDirectory=None,
