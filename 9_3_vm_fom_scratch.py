@@ -3,14 +3,13 @@ from pyVim.task import WaitForTask
 import json
 from pyVim.connect import SmartConnect, Disconnect
 
-# Charger la configuration depuis le fichier config.json vm_name
 def load_config(config_file):
     with open(config_file, 'r') as file:
         config = json.load(file)
     return config
 
 def get_vm(si, core_vm_name, datacenter_name):
-    """Récupérer la VM spécifiée."""
+    """Recover the specified VM."""
     content = si.RetrieveContent()
     datacenter = next((dc for dc in content.rootFolder.childEntity if dc.name == datacenter_name), None)
     if not datacenter:
@@ -18,7 +17,7 @@ def get_vm(si, core_vm_name, datacenter_name):
     return next((vm for vm in datacenter.vmFolder.childEntity if vm.name == core_vm_name), None)
 
 def add_cdrom(si, core_vm_name, iso_path, datacenter_name):
-    """Ajouter un lecteur CD-ROM à la VM et attacher l'image ISO."""
+    """Add a CD-ROM drive to the VM and attach the ISO image."""
     vm = get_vm(si, core_vm_name, datacenter_name)
     if not vm:
         raise Exception(f"VM '{core_vm_name}' non trouvée dans le datacenter '{datacenter_name}'.")
@@ -43,7 +42,7 @@ def add_cdrom(si, core_vm_name, iso_path, datacenter_name):
     print(f"CD-ROM ajouté et ISO attachée à la VM '{core_vm_name}'.")
 
 def start_vm(si, core_vm_name, datacenter_name):
-    """Démarrer la VM spécifiée."""
+    """Start the specified VM."""
     vm = get_vm(si, core_vm_name, datacenter_name)
     if not vm:
         raise Exception(f"VM '{core_vm_name}' non trouvée dans le datacenter '{datacenter_name}'.")

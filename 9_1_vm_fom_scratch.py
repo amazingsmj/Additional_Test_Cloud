@@ -15,7 +15,7 @@ def create_empty_vm(new_core_vm_name, si, vm_folder, resource_pool, datastore, m
     """Crée une VM vide avec la configuration spécifiée."""
     datastore_path = f'[{datastore}] {new_core_vm_name}'
     
-    # Configurer le fichier VMX de base, sans disque
+    # Configure the basic VMX file, without disk
     vmx_file = vim.vm.FileInfo(
         logDirectory=None,
         snapshotDirectory=None,
@@ -28,7 +28,7 @@ def create_empty_vm(new_core_vm_name, si, vm_folder, resource_pool, datastore, m
         memoryMB=memory_mb,
         numCPUs=num_cpus,
         files=vmx_file,
-        guestId='otherGuest',  # Vous pouvez ajuster cela selon le type de système d'exploitation 
+        guestId='otherGuest',  
         version='vmx-07'
     )
     
@@ -37,14 +37,13 @@ def create_empty_vm(new_core_vm_name, si, vm_folder, resource_pool, datastore, m
     tasks.wait_for_tasks(si, [task])
 
 def main():
-    config = load_config('config.json')  # Charge la configuration depuis le fichier
+    config = load_config('config.json')  
 
-    # Connexion à vSphere
     si = SmartConnect(
     host=config['center_host'],
     user=config['admin_user'],
     pwd=config['password'],
-    disableSslCertValidation=True  # Déactivation SSL
+    disableSslCertValidation=True 
 )
 
     content = si.RetrieveContent()
@@ -52,7 +51,7 @@ def main():
     resource_pool = pchelper.get_obj(content, [vim.ResourcePool], config['resource_pool'])
     datastore = config['data_store']
     
-    # Création de plusieurs instances de VMs
+    # Creation of several VM instances
     for i in range(config['number_of_instances']):
         vm_name = f"{config['new_core_vm_name']}_{i + 1}"
         create_empty_vm(
@@ -68,6 +67,5 @@ def main():
 
     print(f"{config['number_of_instances']} VM(s) créées avec succès.")
 
-# Démarrer le programme
 if __name__ == "__main__":
     main()

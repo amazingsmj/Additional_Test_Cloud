@@ -251,7 +251,7 @@ class WebHandle(object):
 
 def main():
 
-    # Charger la configuration depuis le fichier config.json
+    # Load config.json
     config_file_path = "config.json"
     config = load_config(config_file_path)
 
@@ -263,7 +263,7 @@ def main():
 
     vm_name = config["vm_name"]
 
-    # Connexion à l'hôte ESXi
+    # Connect to the ESXi
     try:
         service_instance = SmartConnect(
             host=config["center_host"],
@@ -276,7 +276,7 @@ def main():
         print(f"Erreur de connexion à l'hôte ESXi : {e}")
         return
     
-    # Obtenir l'objet de contenu de la racine
+    # Get root object
     content = service_instance.RetrieveContent()
     
     if service_instance:
@@ -287,7 +287,7 @@ def main():
 
     print("Rename...")
 
-    # Récupérer et afficher la liste des VMs 'tinyVM'
+    # Get the VMs 'tinyVM' List 
     vm_name_filter = 'tinyVM'
     vms = list_vms(content, vm_name_filter)
     if not vms:
@@ -299,13 +299,13 @@ def main():
     for index, vm in enumerate(vms, start=1):
         print(f"{index}. {vm.name}")
 
-    # Renommer les VMs 'tinyVM' en fonction du nombre d'occurrences
+    # Rename the VMs 'tinyVM' about the occurrences numbers
     for i, vm in enumerate(vms, start=1):
         new_vm_name = f"tinyVM_clone_{i}"
         rename_vm(vm, new_vm_name)
 
     print("Fin du clonage de la vm")
-    # Déconnexion de l'hôte ESXi
+    # Disconnect to the ESXi
     Disconnect(service_instance)
     print("Déconnexion de l'hôte ESXi.")
 

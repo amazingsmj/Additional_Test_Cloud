@@ -32,17 +32,16 @@ def rename_vm(vm, new_name):
     
 
 def main():
-    # Charger la configuration depuis le fichier config.json
     config_file_path = "config.json"
     config = load_config(config_file_path)
     
-    # Désactiver la vérification SSL si spécifié dans la configuration
+    # Disable SSL checking if specified in configuration
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     if config.get("disable_ssl_verification", False):
-        context.check_hostname = False  # Désactiver check_hostname pour éviter le conflit
+        context.check_hostname = False  # Disable check_hostname to avoid conflict
         context.verify_mode = ssl.CERT_NONE
 
-    # Connexion à l'hôte ESXi
+    # Connecting to ESXi Host
     try:
         service_instance = SmartConnect(
             host=config["center_host"],
@@ -55,10 +54,10 @@ def main():
         print(f"Erreur de connexion à l'hôte ESXi : {e}")
         return
 
-    # Obtenir l'objet de contenu de la racine
+    # Get content object from root
     content = service_instance.RetrieveContent()
 
-    # Récupérer et afficher la liste des VMs déployées
+    # Retrieve and display the list of deployed VMs
     vms = list_vms(content)
     if not vms:
         print("Aucune VM déployée trouvée.")
@@ -69,7 +68,7 @@ def main():
     for index, vm in enumerate(vms, start=1):
         print(f"{index}. {vm.name}")
 
-    # Demander à l'utilisateur de sélectionner une VM à renommer par son numéro
+    # Ask the user to select a VM to rename by its number
     try:
         vm_index = int(input("Entrez le numéro de la VM que vous souhaitez renommer : ")) - 1
         selected_vm = vms[vm_index]
@@ -78,12 +77,11 @@ def main():
         Disconnect(service_instance)
         return
 
-    # Demander le nouveau nom de la VM
+    
     new_vm_name = input("Veuillez entrer le nouveau nom de la VM : ")
-    # Renommer la VM
+    
     rename_vm(selected_vm, new_vm_name)
 
-    # Déconnexion de l'hôte ESXi
     Disconnect(service_instance)
     print("Déconnexion de l'hôte ESXi.")
 

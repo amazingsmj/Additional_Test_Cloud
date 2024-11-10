@@ -16,33 +16,33 @@ def list_vms(content):
     vm_list.Destroy()
 
 def main():
-    # Charger la configuration
+    # Loading configurations
     config = load_config('config.json')
 
-    # Connexion à l'instance de service 
+    # Connection to the service instance 
     si = service_instance.connect(config['center_host'], config['admin_user'], config['password'])
 
     content = si.RetrieveContent()
     
-    # Lister les VMs disponibles pour débogage
+    # List the available VMs
     list_vms(content)
 
-    # Récupérer le template de la VM
+    # Get the VM template
     template = pchelper.get_obj(content, [vim.VirtualMachine], config['template_vm_name'])
 
     if template:
-        # Cloner la VM
+        # Clone the VM
         clone_vm(
             content,
             template,
-            config['new_vm_name'],  # Nom de la nouvelle VM
+            config['new_vm_name'],
             config['datacenter_name'],
             config['vm_folder'],
             config['data_store'],
             config['cluster_name'],
             config['resource_pool'],
             config['power_on'],
-            None  # pas de datastore cluster spécifié
+            None  # no datastore cluster specified
         )
     else:
         print("Template VM non trouvé.")

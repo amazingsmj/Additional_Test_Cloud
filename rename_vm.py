@@ -31,17 +31,15 @@ def rename_vm(vm, new_name):
         return False
 
 def main():
-    # Charger la configuration depuis le fichier config.json
     config_file_path = "config.json"
     config = load_config(config_file_path)
     
-    # Désactiver la vérification SSL si spécifié dans la configuration
+    
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     if config.get("disable_ssl_verification", False):
-        context.check_hostname = False  # Désactiver check_hostname pour éviter le conflit
+        context.check_hostname = False  
         context.verify_mode = ssl.CERT_NONE
 
-    # Connexion à l'hôte ESXi
     try:
         service_instance = SmartConnect(
             host=config["center_host"],
@@ -54,10 +52,8 @@ def main():
         print(f"Erreur de connexion à l'hôte ESXi : {e}")
         return
 
-    # Obtenir l'objet de contenu de la racine
     content = service_instance.RetrieveContent()
 
-    # Récupérer et afficher la liste des VMs déployées
     vms = list_vms(content)
     if not vms:
         print("Aucune VM déployée trouvée.")
@@ -68,7 +64,6 @@ def main():
     for index, vm in enumerate(vms, start=1):
         print(f"{index}. {vm.name}")
 
-    # Demander à l'utilisateur de sélectionner une VM à renommer
     vm_name = input("Entrez le nom de la VM que vous souhaitez renommer : ")
     selected_vm = None
     for vm in vms:
@@ -77,14 +72,12 @@ def main():
             break
 
     if selected_vm:
-        # Demander le nouveau nom de la VM
         new_vm_name = input("Veuillez entrer le nouveau nom de la VM : ")
-        # Renommer la VM
+        
         
     else:
         print(f"Aucune VM trouvée avec le nom '{vm_name}'.")
 
-    # Déconnexion de l'hôte ESXi
     Disconnect(service_instance)
     print("Déconnexion de l'hôte ESXi.")
 

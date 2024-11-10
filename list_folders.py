@@ -47,27 +47,23 @@ def list_datastore_files(datastore, folder_path=""):
             print(f" - {file.path}")
 
 def main():
-    # Configuration
-    host = "10.144.208.236"           # IP de votre hôte ESXi ou vCenter
-    user = "root"               # Nom d'utilisateur pour ESXi/vCenter
-    password = "toto32.."       # Mot de passe
-    datastore_name = "datastore1"  # Nom du datastore
-    folder_path = ""            # Chemin du dossier à lister (laisser vide pour la racine)
-
-    # Connexion à vSphere
+     # Configuration
+    host = "10.144.208.236"           
+    user = "root"               
+    password = "toto32.."       
+    datastore_name = "datastore1"  
+    folder_path = "" 
+  
     si = connect_to_vsphere(host, user, password)
     if not si:
         return
 
-    # Récupération du contenu
     content = si.RetrieveContent()
 
-    # Récupération du datastore
     datastore = get_datastore(content, datastore_name)
     if not datastore:
         return
 
-    # Lister les dossiers et fichiers dans le datastore
     list_datastore_files(datastore, folder_path)
 
 if __name__ == "__main__":

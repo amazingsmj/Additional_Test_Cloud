@@ -15,16 +15,16 @@ def list_vms(content):
     vm_list.Destroy()
 
 def main():
-    # Charger la configuration
+    # Load configurations
     config = load_config('config.json')
 
-    # Connexion à l'instance de service 
+    # Connection to the service instance 
     si = service_instance.connect(config['center_host'], config['admin_user'], config['password'])
 
     content = si.RetrieveContent()
     list_vms(content) 
     
-    # Récupération du template de la VM
+    # Get the VM template
     template = pchelper.get_obj(content, [vim.VirtualMachine], config['template_vm_name'])
 
     if template:
@@ -32,7 +32,7 @@ def main():
             print(f"{config['template_vm_name']} n'est pas un modèle de VM.")
             return
 
-        # Cloner la VM
+        # Clone the VM
         clone_vm(
             content,
             template,
