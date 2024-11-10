@@ -78,15 +78,20 @@ def list_vms(content):
                 folder_path = get_vm_folder_path(vm, datacenter)
                 print(f" - VM: {vm.name} (Path: {folder_path})")
 
+                
+def load_config(file_path):
+    with open(file_path, 'r') as f:
+        return json.load(f)
+    
 def main():
-    # Configuration
-    host = "10.144.208.236"           
-    user = "root"               
-    password = "toto32.."       
-    datastore_name = "datastore1"  
+    config = load_config('config.json')
+
+    # Configuration      
+    datastore_name = config['data_store']  
     folder_path = ""            
 
-    si = connect_to_vsphere(host, user, password)
+    si = connect_to_vsphere(config['center_host'], config['admin_user'], config['password'])
+    
     if not si:
         return
 

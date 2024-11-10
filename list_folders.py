@@ -46,15 +46,19 @@ def list_datastore_files(datastore, folder_path=""):
         for file in result.file:
             print(f" - {file.path}")
 
+def load_config(file_path):
+    with open(file_path, 'r') as f:
+        return json.load(f)
+    
+
 def main():
+    config = load_config('config.json')
      # Configuration
-    host = "10.144.208.236"           
-    user = "root"               
-    password = "toto32.."       
-    datastore_name = "datastore1"  
+    datastore_name = config['data_store']  
     folder_path = "" 
   
-    si = connect_to_vsphere(host, user, password)
+    si = connect_to_vsphere(config['center_host'], config['admin_user'], config['password'])
+    
     if not si:
         return
 
